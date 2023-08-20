@@ -29,7 +29,6 @@ namespace ToyParser.Parsers
         }
         private void ParseProduct()
         {
-            var tags = Document.All.Where(x => x.ClassName == "img-block gtm-click");
             var name = Document.All.Where(x => x.ClassName == "content-title").FirstOrDefault()?.TextContent;
             var price = Document.All.Where(x => x.ClassName == "price" && x.GetAttribute("itemprop") == "price").FirstOrDefault()?.TextContent;
             var priceOld = Document.All.Where(x => x.ClassName == "old-price").FirstOrDefault()?.TextContent;
@@ -49,9 +48,9 @@ namespace ToyParser.Parsers
                     var src = image.QuerySelector("img").GetAttribute("src").Split("/");
                     var route = src[6];
                     var imageName = src[8];
-                    var base_path = $"https://cdn.toy.ru/upload/iblock/{route}/{imageName}";
+                    var image_path = $"https://cdn.toy.ru/upload/iblock/{route}/{imageName}";
 
-                    imagesSrc.Add(base_path);
+                    imagesSrc.Add(image_path);
                 }
 
             }
@@ -61,7 +60,7 @@ namespace ToyParser.Parsers
                 Price = price,
                 PriceOld = priceOld,
                 Availability = availability == null ? "В наличии" : "Не в наличии",
-                ImageLinks = imagesSrc,
+                ImageLinks = string.Join(", ", imagesSrc),
                 ProductLink = Url,
                 Region = region
             };

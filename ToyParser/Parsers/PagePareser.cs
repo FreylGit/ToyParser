@@ -1,5 +1,6 @@
 ﻿using AngleSharp.Html.Parser;
 using ToyParser.Models;
+using ToyParser.Writers;
 
 namespace ToyParser.Parsers
 {
@@ -7,12 +8,12 @@ namespace ToyParser.Parsers
     {
         private List<string> _cardsLink;
         private ProductParser _productParser;
-        private IWriter<ProductModel> _writer;
-        public PagePareser(string url, IWriter<ProductModel> writer) : base(url)
+        private List<IWriter<ProductModel>> _writers;
+        public PagePareser(string url, List<IWriter<ProductModel>> writers) : base(url)
         {
             _cardsLink = new List<string>();
             Model = new PageModel();
-            _writer = writer;
+            _writers = writers;
         }
 
         public override async Task<PageModel> ParseHtmlAsync()
@@ -65,8 +66,12 @@ namespace ToyParser.Parsers
                 var product = await _productParser.ParseHtmlAsync();
                 products.Add(product);
 
-                //Запись в файл
-                _writer.Write(product);
+                //Сохранение 
+                foreach (var writer in _writers)
+                {
+                    writer.Write(product);
+                }
+                
                 await Console.Out.WriteLineAsync($"Записан продукт:{product.Name}");
             }
             return products;

@@ -1,7 +1,7 @@
 ﻿using OfficeOpenXml;
 using ToyParser.Models;
 
-namespace ToyParser
+namespace ToyParser.Writers
 {
     public class WriterExcelProduct : IWriter<ProductModel>
     {
@@ -57,8 +57,5 @@ namespace ToyParser
             worksheet.Column(6).Width = 30;
             worksheet.Column(6).Width = 30;
         }
-
-
-
     }
 }

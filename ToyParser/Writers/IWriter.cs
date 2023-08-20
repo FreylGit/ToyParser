@@ -1,4 +1,4 @@
-﻿namespace ToyParser
+﻿namespace ToyParser.Writers
 {
     public interface IWriter<T>
     {

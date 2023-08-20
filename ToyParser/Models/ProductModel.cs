@@ -2,11 +2,12 @@
 {
     public class ProductModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Price { get; set; }
-        public string PriceOld { get; set; }
+        public string? PriceOld { get; set; }
         public string Availability { get; set; }
-        public List<string> ImageLinks { get; set; }
+        public string ImageLinks { get; set; }
         public string ProductLink { get; set; }
         public string Region { get; set; }
         public override string ToString()
